@@ -1,48 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:todo_riverpod/core/common/widgets/fading_text.dart';
-import 'package:todo_riverpod/core/common/widgets/white_space.dart';
-import 'package:todo_riverpod/core/res/image_res.dart';
+import 'package:todo_riverpod/core/res/color_res.dart';
+import 'package:todo_riverpod/features/onboarding/views/widgets/first_page.dart';
+import 'package:todo_riverpod/features/onboarding/views/widgets/second_page.dart';
 
-class OnBoardingScreen extends StatelessWidget {
+class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
+
+  @override
+  State<OnBoardingScreen> createState() => _OnBoardingScreenState();
+}
+
+class _OnBoardingScreenState extends State<OnBoardingScreen> {
+  final pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(ImageRes.todo),
-              const WhiteSpace(height: 50),
-              const FadingText(
-                'ToDo Tasks',
-                textAlign: TextAlign.center,
-                fontSize: 30,
-                fontWeight: FontWeight.w500,
-              ),
-              Row(
+        child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            PageView(
+              controller: pageController,
+              children: const [
+                FirstPage(),
+                SecondPage(),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10)
+                  .copyWith(bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
                       IconButton(
                         iconSize: 30,
                         onPressed: () {},
+                        color: ColorsRes.light,
                         icon: const Icon(Icons.arrow_forward_ios_rounded),
                       ),
-                      const FadingText(
-                        'Skip',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
                     ],
-                  )
+                  ),
+                  SmoothPageIndicator(
+                    controller: pageController,
+                    count: 2,
+                    effect: WormEffect(
+                      dotHeight: 12,
+                      spacing: 10,
+                      dotColor: Colors.yellow.withOpacity(.5),
+                      activeDotColor: ColorsRes.light,
+                    ),
+                  ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
