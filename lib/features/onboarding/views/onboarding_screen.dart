@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:todo_riverpod/core/common/widgets/fading_text.dart';
 import 'package:todo_riverpod/core/res/color_res.dart';
 import 'package:todo_riverpod/features/onboarding/views/widgets/first_page.dart';
 import 'package:todo_riverpod/features/onboarding/views/widgets/second_page.dart';
