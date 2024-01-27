@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_riverpod/core/utils/core_utils.dart';
 import 'package:todo_riverpod/features/authentication/views/otp_verification_screen.dart';
+
+final authRepoProvider =
+    Provider((ref) => AuthenticationRepository(auth: FirebaseAuth.instance));
 
 class AuthenticationRepository {
   const AuthenticationRepository({required this.auth});
@@ -16,6 +20,7 @@ class AuthenticationRepository {
           auth.signInWithCredential(credential);
         },
         verificationFailed: (exception) {
+          debugPrint(exception.message);
           CoreUtils.showSnackBar(
               context: context, message: '${exception.message}');
         },

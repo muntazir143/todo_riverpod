@@ -12,7 +12,20 @@
           "package_name": "com.example.todo_riverpod"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "362999442732-m5l5lkslpp2se2nu9bot558eb6pnsger.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.todo_riverpod",
+            "certificate_hash": "18e0cfa965c91a40cc2b4323b9bca1d4a82f000d"
+          }
+        },
+        {
+          "client_id": "362999442732-e51khmhsduolqqqgup2p3p9m20nftla9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCEKAbOGHlSH6OxQazPoslqMRq_LTBHzpQ"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362999442732-e51khmhsduolqqqgup2p3p9m20nftla9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "362999442732-e0ruiprahqg1hj466oj5a799ci8a2uh4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.todoRiverpod"
+              }
+            }
+          ]
         }
       }
     }

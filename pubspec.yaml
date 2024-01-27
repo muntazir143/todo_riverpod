@@ -41,6 +41,10 @@ dependencies:
   pinput: ^3.0.1
   firebase_core: ^2.24.2
   firebase_auth: ^4.16.0
+  hooks_riverpod: ^2.4.9
+  flutter_hooks: ^0.20.4
+  riverpod_annotation: ^2.3.3
+  country_picker: ^2.0.23
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +56,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.1
+  build_runner: ^2.4.8
+  riverpod_generator: ^2.3.9
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

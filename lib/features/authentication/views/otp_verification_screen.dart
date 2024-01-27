@@ -21,6 +21,7 @@ class OTPVerificationScreen extends StatelessWidget {
                 length: 6,
                 onCompleted: (pin) {
                   // todo
+                  debugPrint(pin);
                 },
               ),
             ],
