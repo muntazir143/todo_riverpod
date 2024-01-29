@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:todo_riverpod/core/helper/db_helper.dart';
 import 'package:todo_riverpod/core/utils/core_utils.dart';
 import 'package:todo_riverpod/features/authentication/views/otp_verification_screen.dart';
 
@@ -36,11 +37,34 @@ class AuthenticationRepository {
       {required BuildContext context,
       required String verificationId,
       required String otp}) async {
-    final credential = PhoneAuthProvider.credential(
-        verificationId: verificationId, smsCode: otp);
+    try {
+      void showSnack() =>
+          CoreUtils.showSnackBar(context: context, message: 'Error');
+      final credential = PhoneAuthProvider.credential(
+          verificationId: verificationId, smsCode: otp);
 
-    final userCredential = await auth.signInWithCredential(credential);
+      final navigator = Navigator.of(context);
 
-    if (userCredential.user != null) {}
+      final userCredential = await auth.signInWithCredential(credential);
+
+      if (userCredential.user != null) {
+        await DBHelper.createUser(isVerified: true);
+        navigator.pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (_) => const Scaffold(
+                body: Center(
+                  child: Text('Home'),
+                ),
+              ),
+            ),
+            (route) => false);
+      } else {
+        showSnack();
+      }
+    } on FirebaseException catch (e) {
+      CoreUtils.showSnackBar(context: context, message: '${e.message}');
+    } catch (e) {
+      CoreUtils.showSnackBar(context: context, message: 'Error');
+    }
   }
 }
