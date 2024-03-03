@@ -31,7 +31,7 @@ class MyApp extends ConsumerWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Todo',
           theme: ThemeData(
             colorScheme:
                 ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent),
