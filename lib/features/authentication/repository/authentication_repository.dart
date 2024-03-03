@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_riverpod/core/helper/db_helper.dart';
 import 'package:todo_riverpod/core/utils/core_utils.dart';
 import 'package:todo_riverpod/features/authentication/views/otp_verification_screen.dart';
+import 'package:todo_riverpod/features/todo/views/home_screen.dart';
 
 final authRepoProvider =
     Provider((ref) => AuthenticationRepository(auth: FirebaseAuth.instance));
@@ -26,8 +27,11 @@ class AuthenticationRepository {
             context: context, message: '${exception.message}');
       },
       codeSent: (verificationId, _) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (_) => const OTPVerificationScreen()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) =>
+                    OTPVerificationScreen(verificationId: verificationId)));
       },
       codeAutoRetrievalTimeout: (verificationId) {},
     );
@@ -51,11 +55,7 @@ class AuthenticationRepository {
         await DBHelper.createUser(isVerified: true);
         navigator.pushAndRemoveUntil(
             MaterialPageRoute(
-              builder: (_) => const Scaffold(
-                body: Center(
-                  child: Text('Home'),
-                ),
-              ),
+              builder: (_) => const HomeScreen(),
             ),
             (route) => false);
       } else {

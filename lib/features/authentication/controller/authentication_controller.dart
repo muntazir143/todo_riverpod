@@ -14,4 +14,12 @@ class AuthenticationController {
       {required BuildContext context, required String phoneNumber}) async {
     return repository.sendOTP(context: context, phoneNumber: phoneNumber);
   }
+
+  Future<void> verifyOTP(
+      {required BuildContext context,
+      required String verificationId,
+      required String otp}) async {
+    return repository.verifyOTP(
+        context: context, verificationId: verificationId, otp: otp);
+  }
 }
