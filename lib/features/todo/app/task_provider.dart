@@ -1,8 +1,6 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_riverpod/core/helper/db_helper.dart';
-import 'package:todo_riverpod/core/res/color_res.dart';
 import 'package:todo_riverpod/features/todo/models/task_model.dart';
 
 part 'task_provider.g.dart';
@@ -78,11 +76,5 @@ class Task extends _$Task {
   Future<void> markAsCompleted(TaskModel task) async {
     await DBHelper.updateTask(task);
     refresh();
-  }
-
-  Color randomColor() {
-    final random = Random();
-    int randomIndex = random.nextInt(ColorsRes.colors.length);
-    return ColorsRes.colors[randomIndex];
   }
 }

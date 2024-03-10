@@ -14,7 +14,7 @@ class DBHelper {
       'startTime STRING, '
       'endTime STRING, '
       'remind INTEGER, '
-      'repeat STRING, '
+      'repeat INTEGER, '
       'isCompleted INTEGER'
       ')',
     );

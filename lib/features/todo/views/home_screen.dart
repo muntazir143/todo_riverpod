@@ -8,6 +8,7 @@ import 'package:todo_riverpod/core/helper/db_helper.dart';
 import 'package:todo_riverpod/core/res/color_res.dart';
 import 'package:todo_riverpod/features/authentication/views/signin_screen.dart';
 import 'package:todo_riverpod/features/todo/views/add_task_screen.dart';
+import 'package:todo_riverpod/features/todo/widgets/pending_tasks.dart';
 
 class HomeScreen extends HookWidget {
   const HomeScreen({super.key});
@@ -154,12 +155,15 @@ class HomeScreen extends HookWidget {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.26,
-              child: TabBarView(
-                controller: tabController,
-                children: [
-                  ColoredBox(color: Colors.red),
-                  ColoredBox(color: Colors.blue),
-                ],
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    PendingTasks(),
+                    ColoredBox(color: Colors.blue),
+                  ],
+                ),
               ),
             ),
           ],

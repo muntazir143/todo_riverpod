@@ -9,6 +9,8 @@ import 'package:todo_riverpod/core/common/widgets/white_space.dart';
 import 'package:todo_riverpod/core/res/color_res.dart';
 import 'package:todo_riverpod/core/utils/core_utils.dart';
 import 'package:todo_riverpod/features/todo/app/task_date_provider.dart';
+import 'package:todo_riverpod/features/todo/app/task_provider.dart';
+import 'package:todo_riverpod/features/todo/models/task_model.dart';
 
 class AddTaskScreen extends HookConsumerWidget {
   const AddTaskScreen({super.key});
@@ -70,7 +72,7 @@ class AddTaskScreen extends HookConsumerWidget {
               children: [
                 Expanded(
                   child: RoundButton(
-                    text: dateProvider == null
+                    text: ref.watch(taskStartTimeProvider) == null
                         ? 'Start Time'
                         : ref.read(taskStartTimeProvider.notifier).time()!,
                     backgroundColour: Colors.grey[600],
@@ -122,7 +124,31 @@ class AddTaskScreen extends HookConsumerWidget {
               text: 'Submit',
               backgroundColour: Colors.green,
               textColour: ColorsRes.light,
-              onPressed: () {},
+              onPressed: () async {
+                if (titleController.text.trim().isNotEmpty &&
+                    descriptionController.text.trim().isNotEmpty &&
+                    dateProvider != null &&
+                    startTimeProvider != null &&
+                    endTimeProvider != null) {
+                  final navigator = Navigator.of(context);
+                  CoreUtils.showLoader(context);
+                  await ref.read(taskProvider.notifier).addTask(TaskModel(
+                        title: titleController.text.trim(),
+                        description: descriptionController.text.trim(),
+                        date: dateProvider,
+                        startTime: startTimeProvider,
+                        endTime: endTimeProvider,
+                        remind: false,
+                        repeat: true,
+                      ));
+                  navigator
+                    ..pop()
+                    ..pop();
+                } else {
+                  CoreUtils.showSnackBar(
+                      context: context, message: 'All fields are required');
+                }
+              },
             ),
           ],
         ),
