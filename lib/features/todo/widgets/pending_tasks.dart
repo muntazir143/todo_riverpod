@@ -27,7 +27,7 @@ class PendingTasks extends ConsumerWidget {
             );
           }
           return ColoredBox(
-            color: Colors.grey[400]!,
+            color: Colors.grey[800]!,
             child: ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (_, index) {
