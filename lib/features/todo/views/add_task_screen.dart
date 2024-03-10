@@ -7,6 +7,7 @@ import 'package:todo_riverpod/core/common/widgets/filled_field.dart';
 import 'package:todo_riverpod/core/common/widgets/round_button.dart';
 import 'package:todo_riverpod/core/common/widgets/white_space.dart';
 import 'package:todo_riverpod/core/res/color_res.dart';
+import 'package:todo_riverpod/core/utils/core_utils.dart';
 import 'package:todo_riverpod/features/todo/app/task_date_provider.dart';
 
 class AddTaskScreen extends HookConsumerWidget {
@@ -16,7 +17,14 @@ class AddTaskScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final titleController = useTextEditingController();
     final descriptionController = useTextEditingController();
+    final dateProvider = ref.watch(taskDateProvider);
+    final startTimeProvider = ref.watch(taskStartTimeProvider);
+    final endTimeProvider = ref.watch(taskEndTimeProvider);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        foregroundColor: ColorsRes.light,
+      ),
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -39,7 +47,9 @@ class AddTaskScreen extends HookConsumerWidget {
               height: 20,
             ),
             RoundButton(
-              text: 'Date',
+              text: ref.watch(taskDateProvider) == null
+                  ? 'Set Date'
+                  : ref.read(taskDateProvider.notifier).date()!,
               backgroundColour: Colors.grey[500],
               textColour: ColorsRes.light,
               onPressed: () {
@@ -60,10 +70,24 @@ class AddTaskScreen extends HookConsumerWidget {
               children: [
                 Expanded(
                   child: RoundButton(
-                    text: 'Start Time',
+                    text: dateProvider == null
+                        ? 'Start Time'
+                        : ref.read(taskStartTimeProvider.notifier).time()!,
                     backgroundColour: Colors.grey[600],
                     textColour: ColorsRes.light,
-                    onPressed: () {},
+                    onPressed: () {
+                      if (dateProvider == null) {
+                        CoreUtils.showSnackBar(
+                            context: context,
+                            message: 'Please pick a date first');
+                        return;
+                      }
+                      DatePicker.showDateTimePicker(context, onConfirm: (time) {
+                        ref
+                            .read(taskStartTimeProvider.notifier)
+                            .changeTime(time);
+                      });
+                    },
                   ),
                 ),
                 const WhiteSpace(
@@ -71,10 +95,22 @@ class AddTaskScreen extends HookConsumerWidget {
                 ),
                 Expanded(
                   child: RoundButton(
-                    text: 'End Time',
+                    text: ref.watch(taskEndTimeProvider) == null
+                        ? 'End Time'
+                        : ref.read(taskEndTimeProvider.notifier).time()!,
                     backgroundColour: Colors.grey[500],
                     textColour: ColorsRes.light,
-                    onPressed: () {},
+                    onPressed: () {
+                      if (startTimeProvider == null) {
+                        CoreUtils.showSnackBar(
+                            context: context,
+                            message: 'Please pick a start time first');
+                        return;
+                      }
+                      DatePicker.showDateTimePicker(context, onConfirm: (time) {
+                        ref.read(taskEndTimeProvider.notifier).changeTime(time);
+                      });
+                    },
                   ),
                 ),
               ],

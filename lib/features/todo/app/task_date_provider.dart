@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'task_date_provider.g.dart';
@@ -9,6 +10,11 @@ class TaskDate extends _$TaskDate {
 
   void changeDate(DateTime date) {
     state = date;
+  }
+
+  String? date() {
+    if (state == null) return null;
+    return DateFormat('yyyy-MM-dd').format(state!);
   }
 
   void reset() => state = null;
@@ -23,6 +29,11 @@ class TaskStartTime extends _$TaskStartTime {
     state = date;
   }
 
+  String? time() {
+    if (state == null) return null;
+    return DateFormat('hh:mm').format(state!);
+  }
+
   void reset() => state = null;
 }
 
@@ -33,6 +44,11 @@ class TaskEndTime extends _$TaskEndTime {
 
   void changeTime(DateTime date) {
     state = date;
+  }
+
+  String? time() {
+    if (state == null) return null;
+    return DateFormat('hh:mm').format(state!);
   }
 
   void reset() => state = null;
